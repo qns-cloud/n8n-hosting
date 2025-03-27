@@ -8,6 +8,10 @@ networks:
   n8n-network:
     driver: overlay
 
+configs:
+  postgres_init: 
+    file: ./init-data.sh
+
 services:
   postgres:
     image: postgres:16
@@ -19,8 +23,11 @@ services:
       - POSTGRES_NON_ROOT_USER
       - POSTGRES_NON_ROOT_PASSWORD
     volumes:
-      - db_storage:/var/lib/postgresql/data
-      - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
+      - db_storage:/var/lib/postgresql/data  
+    configs:
+      - source: postgres_init
+        target: /docker-entrypoint-initdb.d/init-data.sh
+        mode: 0755
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -h localhost -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
       interval: 5s
@@ -45,3 +52,5 @@ services:
       - n8n_storage:/home/node/.n8n
     depends_on:
       - postgres
+    networks:
+      - backend
