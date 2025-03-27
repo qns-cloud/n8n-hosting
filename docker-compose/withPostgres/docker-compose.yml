@@ -41,3 +41,6 @@ services:
       - n8n_storage:/home/node/.n8n
     depends_on:
       - postgres
+
+networks:
+      - n8n-network
