@@ -40,5 +40,4 @@ services:
     volumes:
       - n8n_storage:/home/node/.n8n
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
