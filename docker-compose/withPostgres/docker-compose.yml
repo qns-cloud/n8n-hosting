@@ -2,11 +2,14 @@ version: '3.8'
 
 volumes:
   db_storage:
+    driver: local
   n8n_storage:
+    driver: local
 
 networks:
   n8n-network:
     driver: overlay
+    attachable: true
 
 configs:
   postgres_init: 
@@ -52,5 +55,3 @@ services:
       - n8n_storage:/home/node/.n8n
     depends_on:
       - postgres
-    networks:
-      - backend
