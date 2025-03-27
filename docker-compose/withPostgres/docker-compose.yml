@@ -5,7 +5,8 @@ volumes:
   n8n_storage:
 
 networks:
-      - n8n-network
+  n8n-network:
+    driver: overlay
 
 services:
   postgres:
