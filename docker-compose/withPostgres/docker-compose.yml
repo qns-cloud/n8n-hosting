@@ -4,6 +4,9 @@ volumes:
   db_storage:
   n8n_storage:
 
+networks:
+      - n8n-network
+
 services:
   postgres:
     image: postgres:16
@@ -41,6 +44,3 @@ services:
       - n8n_storage:/home/node/.n8n
     depends_on:
       - postgres
-
-networks:
-      - n8n-network
